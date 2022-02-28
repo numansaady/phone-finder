@@ -10,7 +10,8 @@ const searchPhone = () => {
 
 const displayPhones = (phones) => {
     const phonesContainer = document.getElementById("display-search");
-    for (const phone of phones) {
+    const phoneQunatity = phones.slice(0, 20);
+    for (const phone of phoneQunatity) {
         const div = document.createElement('div')
         div.classList.add('col')
         div.innerHTML = `
