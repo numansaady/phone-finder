@@ -14,7 +14,8 @@ body{
     border-radius: 20px;
     box-shadow: 2px 2px 21px #adabab;
 }
-.display-detail, .display-search{
+.display-detail, 
+.display-search{
     background-color: rgb(187 184 184 / 12%);
     border-radius: 10px;
     padding: 10px;

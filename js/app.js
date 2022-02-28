@@ -68,7 +68,7 @@ const displayPhones = (phones) => {
     }
 };
 
-// Show Detail by Phone ID using Explore button 
+// Load Phone Detail by Phone ID  
 const loadPhoneDetails = (phoneId) => {
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
     fetch(url)
@@ -78,8 +78,10 @@ const loadPhoneDetails = (phoneId) => {
     heading('detail-heading', 'block');
 }
 
+// Display Phone Detail by using Explore button 
 const displayPhoneDetails = (info) => {
     const sensorsInfo = info.mainFeatures.sensors;
+    // Class added for adding style 
     detailContainer.classList.add('display-detail');
     const div = document.createElement('div');
     div.classList.add('col');
