@@ -1,4 +1,6 @@
+// Container for display details of selected phone 
 const detailContainer = document.getElementById('display-detail');
+
 // Function for Display Section title 
 const heading = (id, displayStyle) => {
     document.getElementById(id).style.display = displayStyle;
@@ -21,6 +23,7 @@ const searchPhone = () => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => displayPhones(data.data));
+    //   Clear input field, detail container
     document.getElementById("search-field").value = "";
     detailContainer.innerHTML = '';
     detailContainer.classList.remove('display-detail');
@@ -28,14 +31,18 @@ const searchPhone = () => {
 }
 
 const displayPhones = (phones) => {
+    const phonesContainer = document.getElementById("display-search"); 
     // Limit display upto 20
     const phoneQunatity = phones.slice(0, 20);
     if(phoneQunatity <= 0){
         heading('display-error', 'block');
         heading('search-heading', 'none');
         heading('detail-heading', 'none');
-    }else {
-        const phonesContainer = document.getElementById("display-search"); 
+        detailContainer.innerHTML = '';
+        detailContainer.classList.remove('display-detail');
+        phonesContainer.textContent = ''; 
+        phonesContainer.classList.remove('display-search') ;
+    }else {        
         phonesContainer.classList.add('display-search') ;
         // Clear Display serach result    
         phonesContainer.textContent = '';   
@@ -55,7 +62,7 @@ const displayPhones = (phones) => {
         phonesContainer.appendChild(div);
       }
       spinner('none');
-      // Display Section Title  
+      // Display Section Title  and error
     heading('search-heading', 'block');
     heading('display-error', 'none');
     }
@@ -102,8 +109,7 @@ const displayPhoneDetails = (info) => {
             </div>
         </div> 
     `;
-    detailContainer.appendChild(div);   
-    
+    detailContainer.appendChild(div);       
 };
 
 
