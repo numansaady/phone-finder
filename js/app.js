@@ -2,12 +2,12 @@
 const detailContainer = document.getElementById('display-detail');
 
 // Function for Display Section title 
-const heading = (id, displayStyle) => {
+const showHide = (id, displayStyle) => {
     document.getElementById(id).style.display = displayStyle;
   };
-heading('search-heading', 'none');
-heading('detail-heading', 'none');
-heading('display-error', 'none');
+showHide('search-heading', 'none');
+showHide('detail-heading', 'none');
+showHide('display-error', 'none');
 
 // Declare Function for Spinner 
 const spinner = (displayStyle) => {
@@ -19,7 +19,8 @@ spinner('none');
 const searchPhone = () => {
     spinner('block');
     const searchValue = document.getElementById("search-field").value;
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
+    const searchText = searchValue.toLowerCase();
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => displayPhones(data.data));
@@ -27,17 +28,17 @@ const searchPhone = () => {
     document.getElementById("search-field").value = "";
     detailContainer.innerHTML = '';
     detailContainer.classList.remove('display-detail');
-    heading('detail-heading', 'none');
+    showHide('detail-heading', 'none');
 }
 
 const displayPhones = (phones) => {
     const phonesContainer = document.getElementById("display-search"); 
     // Limit display upto 20
-    const phoneQunatity = phones.slice(0, 20);
-    if(phoneQunatity <= 0){
-        heading('display-error', 'block');
-        heading('search-heading', 'none');
-        heading('detail-heading', 'none');
+    if(phones.length <= 0){
+        showHide('display-error', 'block');
+        spinner('none');
+        showHide('search-heading', 'none');
+        showHide('detail-heading', 'none');
         detailContainer.innerHTML = '';
         detailContainer.classList.remove('display-detail');
         phonesContainer.textContent = ''; 
@@ -46,7 +47,8 @@ const displayPhones = (phones) => {
         phonesContainer.classList.add('display-search') ;
         // Clear Display serach result    
         phonesContainer.textContent = '';   
-    for (const phone of phoneQunatity) {
+        const phoneQunatity = phones.slice(0, 20);
+        phoneQunatity.forEach(phone => {
         const div = document.createElement('div')
         div.classList.add('col')
         div.innerHTML = `
@@ -60,11 +62,11 @@ const displayPhones = (phones) => {
             </div> 
         `;
         phonesContainer.appendChild(div);
-      }
+      })
       spinner('none');
       // Display Section Title  and error
-    heading('search-heading', 'block');
-    heading('display-error', 'none');
+    showHide('search-heading', 'block');
+    showHide('display-error', 'none');
     }
 };
 
@@ -75,7 +77,7 @@ const loadPhoneDetails = (phoneId) => {
       .then((response) => response.json())
       .then((data) => displayPhoneDetails(data.data));
       // Display Section Title  
-    heading('detail-heading', 'block');
+    showHide('detail-heading', 'block');
 }
 
 // Display Phone Detail by using Explore button 
